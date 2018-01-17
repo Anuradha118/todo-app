@@ -1,0 +1,20 @@
+<div class="todos">
+  <app-todo-edit></app-todo-edit>
+    <hr>
+    <ul class="list-group">
+      <a
+      class="list-group-item"
+      style="cursor:pointer"
+      *ngFor="let todo of todos">
+      <input type="checkbox" class="checkbox" [(ngModel)]="todo.completed">
+      <span [ngClass]="{'checked': todo.completed}" (click)="onEditItem(todo._id)">{{ todo.text }}</span>
+      <!-- <span (click)="onDeleteItem(i)" class="delete-icon">[X]</span> -->
+      </a>
+    </ul>
+
+    <div class="mtop20">
+      <button class="btn btn-danger" type="button" (click)="deleteSelectedTodos()">
+        Delete Selected
+      </button>
+      </div>
+</div>

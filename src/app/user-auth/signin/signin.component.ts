@@ -21,35 +21,37 @@ export class SignInComponent implements OnInit,OnDestroy{
     // @ViewChild('f') userForm:NgForm;
     messageClass;
     message;
-    isProcessing;
+    // isProcessing;
     constructor(private userauthService:UserAuthService,
                 private router:Router,
                 private route:ActivatedRoute){
 
     }
     onSignin(form:NgForm){
-        this.isProcessing=true;
+        // this.isProcessing=true;
         const value=form.value;
         const email= form.value.email;
         const password= form.value.password;
         // console.log(username,password);
         this.userauthService.userSignIn(email,password)
             .subscribe((res)=>{
+                console.log(res);
                 var data=res.json();
-                var headers=res.headers;
-                console.log(headers);
+                // var headers=res.headers;
+                // console.log(headers);
                 if(!data){
                     this.messageClass='alert alert-danger';
                     this.message='User not registered';
-                    this.isProcessing=false;
+                    // this.isProcessing=false;
                 }
                 else{
-                    // console.log(data);
+                    console.log(data);
                     this.messageClass='alert alert-success';
                     this.message='User login successful';
-                    var token=headers.get('x-auth');
-                    console.log(token);
-                    this.userauthService.storeUserData(data.user,token);
+
+                    // console.log(token);
+                    this.userauthService.storeUserData(data.user,data.token);
+                    // this.userauthService.getToken();
                     this.router.navigate(['/todolist']);  
                 }
             })

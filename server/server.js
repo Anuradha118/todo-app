@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname,'../','dist')));
 app.post('/todos',authenticate,(req,res)=>{
-    // console.log(req.user._id);
+    // console.log(req.body);
     var todo=new Todo({
         text:req.body.text,
         _creator:req.user._id
@@ -84,7 +84,7 @@ app.patch('/todos/:id',authenticate,(req,res)=>{
     }
 
     if(_.isBoolean(body.completed)&& body.completed){
-        console.log(body.completed);
+        // console.log(body.completed);
         body.completedAt = new Date().getTime();
         }
     else{
@@ -115,14 +115,19 @@ app.post('/users',(req,res)=>{
 });
 
 app.get('/users/me',authenticate,(req,res)=>{
-    res.send(req.user);
+    if(req.status===200){
+        res.send(req.user);
+    }
+    // res.send(req.user);
+    
 });
 app.post('/users/login',(req,res)=>{
     var body=_.pick(req.body,['email','password']);
 
     User.findByCredentials(body.email,body.password).then((user)=>{
         return user.generateAuthToken().then((token)=>{
-            res.header('x-auth',token).send(user);
+            // res.header('x-auth',token).send(user);
+            res.send({user,token});
         })
     }).catch((e)=>{
         res.status(400).send(e);

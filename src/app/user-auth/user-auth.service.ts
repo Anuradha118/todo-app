@@ -1,12 +1,14 @@
 import { Http,Headers, RequestOptions } from "@angular/http";
 import { Injectable } from "@angular/core";
-// import { tokenNotExpired } from 'angular2-jwt';
+import { tokenNotExpired } from 'angular2-jwt';
 import 'rxjs/add/operator/map';
+// import { setTimeout } from "timers";
 
 @Injectable()
 export class UserAuthService{
     authToken:string;
     user;
+    loggedIn=false;
     constructor(private http:Http){
         console.log("Service initialised");
     }
@@ -23,24 +25,52 @@ export class UserAuthService{
     }
 
     storeUserData(user,token){
-        // console.log(token);
+        console.log(user);
         localStorage.setItem('token',token);
+        console.log(localStorage.getItem('token') +' abc');
         localStorage.setItem('user',JSON.stringify(user));
-        this.authToken=token;
+        // this.authToken=localStorage.getItem('token');
         // console.log(this.authToken);       
-        this.user=user;
+        // this.user=user;
     }
     isAuthenticated(){
-        return this.authToken != null;
+        return !(localStorage.getItem('token') === null);
+        // localStorage.setItem('token',"abc123");
+        // if(localStorage.getItem('token')===null){
+        //     return false;
+        // }else{
+        //     let headers =new Headers({'Content-Type':'application/json','x-auth':localStorage.getItem('token')});
+        //     let options= new RequestOptions({headers:headers});
+        //     this.http.get('http://localhost:3000/users/me',options)
+        //     .subscribe((res)=>{
+        //         var data=res.json();
+        //         if(data==="User Not Authorized"){
+        //             return false;
+        //         }else{
+        //             // alert(res);
+        //             return true;
+        //         }
+        //     });
+        // }
+        // const token=localStorage.getItem('token');
+        // this.loggedIn = tokenNotExpired(token);
+        // // console.log(this.loggedIn);
+        // const promise=new Promise((resolve,reject)=>{
+        //     setTimeout(()=>{
+        //         resolve(this.loggedIn);
+        //     },800);
+        // });
+        // return promise;
     }
-
+    
     userLogout(){
-        let headers =new Headers({'Content-Type':'application/json','x-auth':this.authToken});
+        let headers =new Headers({'Content-Type':'application/json','x-auth':localStorage.getItem('token')});
         let options= new RequestOptions({headers:headers});
         this.http.delete('http://localhost:3000/users/me/token',options)
             .subscribe((res)=>{
                 if(res.status===200){
-                  this.authToken=null;
+                    console.log('A');
+                  localStorage.clear();
                 }
             }
         );

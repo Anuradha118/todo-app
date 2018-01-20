@@ -5,10 +5,10 @@
       <a
       class="list-group-item"
       style="cursor:pointer"
-      *ngFor="let todo of todos">
+      *ngFor="let todo of todos;let i=index">
       <input type="checkbox" class="checkbox" [(ngModel)]="todo.completed">
-      <span [ngClass]="{'checked': todo.completed}" (click)="onEditItem(todo._id)">{{ todo.text }}</span>
-      <!-- <span (click)="onDeleteItem(i)" class="delete-icon">[X]</span> -->
+      <span [ngClass]="{'checked': todo.completed}" (click)="onEditItem(todo.id,i)">{{ todo.text }}</span>
+      <span (click)="onDeleteItem(todo.id,i)" class="delete-icon" *ngIf="todo.completed">[X]</span>
       </a>
     </ul>
 

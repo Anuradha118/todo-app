@@ -16,12 +16,12 @@ export class UserAuthService{
     userSignUp(email,password){
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        return this.http.post('http://localhost:3000/users',{email:email,password:password},options);
+        return this.http.post('/users',{email:email,password:password},options);
     }
     userSignIn(email,password){
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        return this.http.post('http://localhost:3000/users/login',{email:email,password:password},options);
+        return this.http.post('/login',{email:email,password:password},options);
     }
 
     storeUserData(user,token){
@@ -66,10 +66,10 @@ export class UserAuthService{
     userLogout(){
         let headers =new Headers({'Content-Type':'application/json','x-auth':localStorage.getItem('token')});
         let options= new RequestOptions({headers:headers});
-        this.http.delete('http://localhost:3000/users/me/token',options)
+        this.http.delete('/users/me/token',options)
             .subscribe((res)=>{
                 if(res.status===200){
-                    console.log('A');
+                    // console.log('A');
                   localStorage.clear();
                 }
             }

@@ -27,7 +27,7 @@ export class TodoListService{
         // return this.todoObj.slice();
         let headers =new Headers({'Content-Type':'application/json','x-auth':localStorage.getItem('token')});
         let options= new RequestOptions({headers:headers});
-        return this.http.get('http://localhost:3000/todos',options).map(res=>res.json());
+        return this.http.get('/todos',options).map(res=>res.json());
     }
 
     getTodo(index:any){
@@ -35,7 +35,7 @@ export class TodoListService{
         // console.log(index);
         let headers =new Headers({'Content-Type':'application/json','x-auth':localStorage.getItem('token')});
         let options= new RequestOptions({headers:headers});
-        return this.http.get('http://localhost:3000/todos/'+index,options).map(res=>res.json());
+        return this.http.get('/todos/'+index,options).map(res=>res.json());
     }
 
     addTodo(todo:string){
@@ -45,7 +45,7 @@ export class TodoListService{
         // console.log(newTodoObj);bc
         // let headers=new Headers({'Content-Type':'aplication/json','x-auth':localStorage.getItem('token')});
         // let options=new RequestOptions({headers:headers});
-        return this.httpClient.post('http://localhost:3000/todos/',body,{
+        return this.httpClient.post('/todos/',body,{
             headers: new HttpHeaders().set('x-auth', localStorage.getItem('token')),
           });
     }
@@ -62,7 +62,7 @@ export class TodoListService{
         // this.todosChanged.next(this.todoObj.slice());
         let headers =new Headers({'Content-Type':'application/json','x-auth':localStorage.getItem('token')});
         let options= new RequestOptions({headers:headers});
-        return this.http.patch('http://localhost:3000/todos/'+index,newTodo,options).map(res=>res.json());
+        return this.http.patch('/todos/'+index,newTodo,options).map(res=>res.json());
     }
 
 
@@ -71,6 +71,6 @@ export class TodoListService{
         // this.todosChanged.next(this.todoObj.slice());
         let headers =new Headers({'Content-Type':'application/json','x-auth':localStorage.getItem('token')});
         let options= new RequestOptions({headers:headers});
-        return this.http.delete('http://localhost:3000/todos/'+index,options).map(res=>res.json());
+        return this.http.delete('/todos/'+index,options).map(res=>res.json());
     }
 }

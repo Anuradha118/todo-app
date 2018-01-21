@@ -40,9 +40,10 @@ export class UserAuthService{
         }else{
             let headers =new Headers({'Content-Type':'application/json','x-auth':localStorage.getItem('token')});
             let options= new RequestOptions({headers:headers});
-            this.http.get('/users/authenticate',options)
+            this.http.get('http://localhost:3000/users/authenticate',options)
             .subscribe((res)=>{
                 var data=res.json();
+                console.log(data);
                 if(res.status!=200){
                     return false;
                 }else{

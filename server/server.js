@@ -113,7 +113,18 @@ app.post('/users',(req,res)=>{
         res.status(400).send(e);
     })
 });
-
+app.get('/users/authenticate',(req,res)=>{
+    var token=req.header('x-auth');
+    User.findByToken(token).then((user)=>{
+        if(!user){
+            res.status(404).send({success:false,msg:"User not found"});
+        }else{
+            res.status(200).send({success:true,user});
+        }
+    }).catch((e)=>{
+        res.status(403).send({success:false,msg:e});
+    }); 
+})
 app.get('/users/me',authenticate,(req,res)=>{
     if(req.status===200){
         res.send(req.user);

@@ -22,18 +22,18 @@ export class SignInComponent implements OnInit,OnDestroy{
     messageClass;
     message;
     // isProcessing;
-    constructor(private userauthService:UserAuthService,
+    constructor(private userAuthService:UserAuthService,
                 private router:Router,
                 private route:ActivatedRoute){
 
     }
     onSignin(form:NgForm){
         // this.isProcessing=true;
-        const value=form.value;
+        // const value=form.value;
         const email= form.value.email;
         const password= form.value.password;
         // console.log(username,password);
-        this.userauthService.userSignIn(email,password)
+        this.userAuthService.userSignIn(email,password)
             .subscribe((res)=>{
                 console.log(res);
                 var data=res.json();
@@ -50,7 +50,7 @@ export class SignInComponent implements OnInit,OnDestroy{
                     this.message='User login successful';
 
                     // console.log(token);
-                    this.userauthService.storeUserData(data.user,data.token);
+                    this.userAuthService.storeUserData(data.user,data.token);
                     // this.userauthService.getToken();
                     this.router.navigate(['/todolist']);  
                 }

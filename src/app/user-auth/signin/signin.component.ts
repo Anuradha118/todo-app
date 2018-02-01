@@ -35,23 +35,15 @@ export class SignInComponent implements OnInit,OnDestroy{
         // console.log(username,password);
         this.userAuthService.userSignIn(email,password)
             .subscribe((res)=>{
-                console.log(res);
                 var data=res.json();
-                // var headers=res.headers;
-                // console.log(headers);
                 if(!data){
                     this.messageClass='alert alert-danger';
                     this.message='User not registered';
-                    // this.isProcessing=false;
                 }
                 else{
-                    console.log(data);
                     this.messageClass='alert alert-success';
                     this.message='User login successful';
-
-                    // console.log(token);
                     this.userAuthService.storeUserData(data.user,data.token);
-                    // this.userauthService.getToken();
                     this.router.navigate(['/todolist']);  
                 }
             })

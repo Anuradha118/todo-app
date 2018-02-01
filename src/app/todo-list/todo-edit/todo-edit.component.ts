@@ -53,10 +53,14 @@ export class TodoEditComponent implements OnInit,OnDestroy {
     else{
       this.tdlservice.addTodo(newTodo)
         .subscribe((res:Todo)=>{
-          console.log(res);
-          this.tdlservice.todoList.push(res);
-          // console.log(this.tdlservice.todoList);
-          // this.tdlservice.storeTodoList(res);
+          var todo=new Todo(
+            res.text,
+            res.completed,
+            res.completedAt,
+            res._creator,
+            res._id
+          );
+          this.tdlservice.storeTodoList(todo);
         },(e)=>{
           console.log(e);
         });   
@@ -64,12 +68,6 @@ export class TodoEditComponent implements OnInit,OnDestroy {
     this.editMode=false;
     form.reset();
   }
-
-  // onCompleted(){
-  //   this.tdlservice.completeTodo(this.editedItemIndex);
-  //   this.tlForm.reset();
-  //   this.editMode=false;
-  // }
 
   ngOnDestroy(){
     this.subscription.unsubscribe();
